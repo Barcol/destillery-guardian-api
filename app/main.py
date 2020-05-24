@@ -1,6 +1,7 @@
 from typing import List, Dict
 
 from fastapi import FastAPI, Depends
+from fastapi.responses import RedirectResponse
 
 from app import models
 from app.models import SessionLocal
@@ -17,8 +18,8 @@ def get_db():
 
 
 @app.get("/")
-def read_root(db: SessionLocal = Depends(get_db)) -> Dict[str, str]:
-    return {"Hello": "World"}
+def read_root(db: SessionLocal = Depends(get_db)) -> RedirectResponse:
+    return RedirectResponse("/docs")
 
 
 @app.get("/sessions")
