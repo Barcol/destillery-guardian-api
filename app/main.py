@@ -49,5 +49,5 @@ def get_results(res_id: str, db: SessionLocal = Depends(get_db)) -> schemas.Resu
 
 
 @app.post('/results/')
-async def create_result(result: Result = None, db: SessionLocal = Depends(get_db)):
+async def create_result(result: Result = None, db: SessionLocal = Depends(get_db), response_model=Result):
     return result.dict()
