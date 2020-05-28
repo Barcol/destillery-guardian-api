@@ -27,4 +27,4 @@ class Result(Base):
     session = relationship("Session", back_populates="result")
 
     def __repr__(self):
-        return f"<User(session_id={self.session_id}"
+        return f"<Result(session_id={self.session_id})>"
