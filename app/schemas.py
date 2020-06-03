@@ -1,10 +1,13 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///database.db"
+load_dotenv()
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={})
+engine = create_engine(os.getenv("SQLALCHEMY_DATABASE_URL"), connect_args={})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
@@ -26,5 +29,5 @@ class Result(Base):
     session_id = Column(Integer, ForeignKey("session.id"))
     session = relationship("Session", back_populates="result")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Result(session_id={self.session_id})>"
