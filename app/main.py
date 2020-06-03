@@ -41,8 +41,8 @@ def get_results(sess_id: str, db: SessionLocal = Depends(get_db)) -> List[schema
     return results
 
 
-@app.get("/results/{res_id}")
-def get_result(res_id: str, db: SessionLocal = Depends(get_db)) -> schemas.Result:
+@app.get("/sessions/{sess_id}/results/{res_id}")
+def get_result(res_id: str, sess_id: str, db: SessionLocal = Depends(get_db)) -> schemas.Result:
     result = db.query(schemas.Result).filter_by(id=res_id).all()
     return result
 
