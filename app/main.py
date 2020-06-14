@@ -47,6 +47,6 @@ def get_result(res_id: str, sess_id: str, db: SessionLocal = Depends(get_db)) ->
     return result
 
 
-@app.post('/results', response_model=models.Result)
-async def create_result(result: Optional[models.Result], db: SessionLocal = Depends(get_db)):
+@app.post('/sessions/{sess_id}/results', response_model=models.Result)
+async def create_result(sess_id: int, result: models.Result, db: SessionLocal = Depends(get_db)):
     return result.dict()
