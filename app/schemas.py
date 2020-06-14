@@ -9,6 +9,9 @@ class Session(BaseModel):
 class OutputSession(Session):
     id: int
 
+    class Config:
+        orm_mode = True
+
 
 class Result(BaseModel):
     temperature_1: int
