@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from fastapi import FastAPI, Depends
 from fastapi.responses import RedirectResponse
@@ -47,11 +47,11 @@ def get_result(res_id: str, sess_id: str, db: SessionLocal = Depends(get_db)) ->
     return schemas.OutputResult.from_orm(result)
 
 
-@app.post('/sessions/{sess_id}/results', response_model=schemas.OutputResult)
+@app.post('/sessions/{sess_id}/results')
 async def create_result(sess_id: int,
                         result: schemas.Result,
-                        db: SessionLocal = Depends(get_db)) -> schemas.OutputResult:
+                        db: SessionLocal = Depends(get_db)) -> Dict[str, str]:
     result_to_database = models.Result(session_id=sess_id, **result.dict())
     db.add(result_to_database)
     db.commit()
-    return schemas.OutputResult.from_orm(result_to_database)
+    return {"status": "OK"}
