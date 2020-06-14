@@ -54,4 +54,4 @@ async def create_result(sess_id: int,
     result_to_database = models.Result(session_id=sess_id, **result.dict())
     db.add(result_to_database)
     db.commit()
-    return schemas.OutputResult(temperature_1=12,id=1,session_id=14)
+    return schemas.OutputResult.from_orm(result_to_database)
