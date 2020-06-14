@@ -49,4 +49,7 @@ def get_result(res_id: str, sess_id: str, db: SessionLocal = Depends(get_db)) ->
 
 @app.post('/sessions/{sess_id}/results', response_model=schemas.Result)
 async def create_result(sess_id: int, result: schemas.Result, db: SessionLocal = Depends(get_db)):
+    result_to_database = models.Result(session_id=sess_id, temperature_1=result.temperature_1)
+    db.add(result_to_database) # linijke wyżej mi coś nie leży xDDD chciałbym jednak przekazać całe Result naraz
+    db.commit()
     return result.dict()

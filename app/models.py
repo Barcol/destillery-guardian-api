@@ -28,6 +28,7 @@ class Result(Base):
     id = Column(Integer, primary_key=True, index=True)
     session_id = Column(Integer, ForeignKey("session.id"))
     session = relationship("Session", back_populates="result")
+    temperature_1 = Column(Integer)
 
     def __repr__(self) -> str:
         return f"<Result(session_id={self.session_id})>"
