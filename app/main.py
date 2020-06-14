@@ -1,11 +1,11 @@
-from typing import List, Optional, Dict
+from typing import List, Dict
 
 from fastapi import FastAPI, Depends
 from fastapi.responses import RedirectResponse
 
 from app import models
-from app.models import SessionLocal
 from app import schemas
+from app.models import SessionLocal
 
 app = FastAPI()
 
@@ -53,5 +53,22 @@ async def create_result(sess_id: int,
                         db: SessionLocal = Depends(get_db)) -> Dict[str, str]:
     result_to_database = models.Result(session_id=sess_id, **result.dict())
     db.add(result_to_database)
+    db.commit()
+    return {"status": "OK"}
+
+
+@app.post('/sessions')
+async def create_session(session: schemas.Session, db: SessionLocal = Depends(get_db)) -> Dict[str, str]:
+    db.add(models.Session(**session.dict()))
+    db.commit()
+    return {"status": "OK"}
+
+
+@app.put('/finish_session/{sess_id}')
+async def finish_session(sess_id: int, db: SessionLocal = Depends(get_db)) -> Dict[str, str]:
+    session = db.query(models.Session).filter_by(id=sess_id).one()
+    if session.is_finished:
+        return {"status": "This session is already finished"}
+    session.is_finished = True
     db.commit()
     return {"status": "OK"}
