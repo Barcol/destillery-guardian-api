@@ -31,4 +31,4 @@ class Result(Base):
     temperature_1 = Column(Integer)
 
     def __repr__(self) -> str:
-        return f"<Result(session_id={self.session_id})>"
+        return f"<Result(id={self.id}, session_id={self.session_id}, temperature_1={self.temperature_1})>"
