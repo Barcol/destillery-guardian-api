@@ -3,9 +3,9 @@ from typing import List, Optional
 from fastapi import FastAPI, Depends
 from fastapi.responses import RedirectResponse
 
-from app import schemas
-from app.schemas import SessionLocal
 from app import models
+from app.models import SessionLocal
+from app import schemas
 
 app = FastAPI()
 
@@ -24,14 +24,14 @@ def read_root(db: SessionLocal = Depends(get_db)) -> RedirectResponse:
 
 
 @app.get("/sessions")
-def read_sessions(db: SessionLocal = Depends(get_db)) -> List[schemas.Session]:
-    sessions = db.query(schemas.Session).all()
+def read_sessions(db: SessionLocal = Depends(get_db)) -> List[models.Session]:
+    sessions = db.query(models.Session).all()
     return sessions
 
 
 @app.get("/sessions/{sess_id}")
-def read_session(sess_id: str, db: SessionLocal = Depends(get_db)) -> schemas.Session:
-    session = db.query(schemas.Session).filter_by(id=sess_id).one()
+def read_session(sess_id: str, db: SessionLocal = Depends(get_db)) -> models.Session:
+    session = db.query(models.Session).filter_by(id=sess_id).one()
     return session
 
 
@@ -47,6 +47,6 @@ def get_result(res_id: str, sess_id: str, db: SessionLocal = Depends(get_db)) ->
     return result
 
 
-@app.post('/sessions/{sess_id}/results', response_model=models.Result)
-async def create_result(sess_id: int, result: models.Result, db: SessionLocal = Depends(get_db)):
+@app.post('/sessions/{sess_id}/results', response_model=schemas.Result)
+async def create_result(sess_id: int, result: schemas.Result, db: SessionLocal = Depends(get_db)):
     return result.dict()
