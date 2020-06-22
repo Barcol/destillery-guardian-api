@@ -64,7 +64,7 @@ async def create_session(session: schemas.Session, db: SessionLocal = Depends(ge
     return {"status": "OK"}
 
 
-@app.put('/finish_session/{sess_id}')
+@app.put('/sessions/{sess_id}/finish')
 async def finish_session(sess_id: int, db: SessionLocal = Depends(get_db)) -> Dict[str, str]:
     session = db.query(models.Session).filter_by(id=sess_id).one()
     if session.is_finished:
