@@ -28,8 +28,8 @@ class Session(Base):
     result = relationship("Result")
 
     def __repr__(self) -> str:
-        return f"<Session(id={self.id}, name={self.name}, distillation_date={self.distillation_date}," \
-               f"is_finished={self.is_finished})>"
+        return ("<Session(id={self.id}, name={self.name}, distillation_date={self.distillation_date},"
+                "is_finished={self.is_finished})>")
 
 
 class Result(Base):
