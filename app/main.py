@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import RedirectResponse
 
 from app import models
@@ -68,7 +68,7 @@ async def create_session(session: schemas.Session, db: SessionLocal = Depends(ge
 async def finish_session(sess_id: int, db: SessionLocal = Depends(get_db)) -> str:
     session = db.query(models.Session).filter_by(id=sess_id).one()
     if session.is_finished:
-        return "This session is already finished"
+        raise HTTPException(status_code=304, detail="This session is already finished")
     session.is_finished = True
     db.commit()
     return "OK"
