@@ -4,6 +4,7 @@ from datetime import datetime
 
 class Session(BaseModel):
     name: str
+    time_interval: int
 
 
 class OutputSession(Session):
@@ -16,7 +17,10 @@ class OutputSession(Session):
 
 
 class Result(BaseModel):
-    temperature_1: int
+    temperature_mash: float
+    temperature_steam: float
+    mass_obtained: int
+    heating_power: int
 
 
 class OutputResult(Result):
