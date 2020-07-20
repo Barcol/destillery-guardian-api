@@ -70,6 +70,7 @@ async def create_result(sess_id: int,
 @app.post('/sessions')
 async def create_session(session: schemas.Session, db: SessionLocal = Depends(get_db)) -> schemas.OutputSession:
     session_to_database = models.Session(**session.dict())
+    db.query(models.Session).update({models.Session.is_finished: True})
     db.add(session_to_database)
     db.commit()
     db.refresh(session_to_database)
