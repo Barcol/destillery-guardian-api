@@ -4,3 +4,4 @@ alembic
 pydantic
 sqlalchemy
 psycopg2
+python-dotenv
