@@ -1,5 +1,14 @@
-from pydantic import BaseModel
 from datetime import datetime
+
+from pydantic import BaseModel
+
+
+class TerminationReason(BaseModel):
+    termination_reason: str
+    # "Sesja w trakcie!"
+    # "Zatrzymany ręcznie z poziomu interfejsu graficznego"
+    # "Zakończona z powodu przekroczenia temperatury"
+    # "Zakończona z powodu przekroczenia wysokości cieszy"
 
 
 class Session(BaseModel):
@@ -11,6 +20,7 @@ class OutputSession(Session):
     id: int
     is_finished: bool
     distillation_date: datetime
+    termination_reason: TerminationReason
 
     class Config:
         orm_mode = True

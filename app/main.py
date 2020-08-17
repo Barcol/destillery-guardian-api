@@ -78,11 +78,15 @@ async def create_session(session: schemas.Session, db: SessionLocal = Depends(ge
 
 
 @app.put('/sessions/{sess_id}/finish')
-async def finish_session(sess_id: int, db: SessionLocal = Depends(get_db)) -> schemas.OutputSession:
+async def finish_session(sess_id: int,
+                         termination_reason: schemas.TerminationReason,
+                         db: SessionLocal = Depends(get_db)) -> schemas.OutputSession:
+    termination_reason = termination_reason.termination_reason
     session = db.query(models.Session).filter_by(id=sess_id).one()
     if session.is_finished:
         raise HTTPException(status_code=304, detail="This session is already finished")
     session.is_finished = True
+    session.termination_reason = termination_reason
     db.commit()
     db.refresh(session)
     return session

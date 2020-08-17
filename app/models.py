@@ -27,10 +27,11 @@ class Session(Base):
     is_finished = Column(Boolean, default=False)
     time_interval = Column(Integer, default=30)
     result = relationship("Result")
+    termination_reason = Column(String, default="Sesja w trakcie")
 
     def __repr__(self) -> str:
-        return ("<Session(id={self.id}, name={self.name}, distillation_date={self.distillation_date},"
-                "is_finished={self.is_finished})>")
+        return (f"<Session(id={self.id}, name={self.name}, distillation_date={self.distillation_date}, "
+                f"is_finished={self.is_finished})>, termination_reason={self.termination_reason})>")
 
 
 class Result(Base):
