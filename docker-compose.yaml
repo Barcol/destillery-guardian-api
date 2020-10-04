@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - 8000:80
+    environment:
+      - SQLALCHEMY_DATABASE_URL=postgres://user:pass@database:5432/my-db-name
+
+  database:
+    image: postgres
+    ports:
+      - 21212:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=my-db-name
