@@ -1,9 +1,10 @@
+# Remember to move this file to parent folder before running
 version: '3.8'
 services:
   app:
-    build: .
+    build: ./destillery_guardian_api
     ports:
-      - 8000:80
+      - 8000:8000
     environment:
       - SQLALCHEMY_DATABASE_URL=postgres://user:pass@database:5432/my-db-name
 
@@ -15,3 +16,11 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
       - POSTGRES_DB=my-db-name
+
+  sensors:
+    build: ./destillery_guardian_sensors
+
+  frontend:
+    build: ./destillery_guardian_frontend
+    ports:
+      -8080:80
