@@ -2,7 +2,7 @@
 version: '3.8'
 services:
   app:
-    build: ./destillery_guardian_api
+    build: ./destillery-guardian-api
     ports:
       - 8000:8000
     environment:
@@ -18,9 +18,9 @@ services:
       - POSTGRES_DB=my-db-name
 
   sensors:
-    build: ./destillery_guardian_sensors
+    build: ./destillery-guardian-sensors
 
   frontend:
-    build: ./destillery_guardian_frontend
+    build: ./destillery-guardian-frontend
     ports:
-      -8080:80
+      - 8080:80
